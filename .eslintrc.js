@@ -33,7 +33,7 @@ module.exports = {
         semi: ["error", "always"],
         "no-console": [
             "warn",
-            { "allow": ["clear", "info", "error", "dir", "trace"] }
+            { "allow": ["log", "clear", "info", "error", "dir", "trace"] }
         ]
     },
 };
