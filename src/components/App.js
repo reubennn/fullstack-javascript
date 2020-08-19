@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import ContestPreview from "./ContestPreview";
 
+import data from "../testData";
+
 // Use class ___ extends React.Component if we need to introduce state
 // Or if lifecycle methods are required
 class App extends React.Component {
@@ -13,25 +15,26 @@ class App extends React.Component {
     // }
     // The above is equivalent to:
     state = {
-        pageHeader: "Naming Contests"
+        pageHeader: "Naming Contests",
+        contests: []
     };
+    componentDidMount() {
+        this.setState({
+            contests: data.contests
+        });
+    }
     render() {
         return (
             <div className="App">
                 <Header message={this.state.pageHeader} />
-                <p className="text-center">
-                    {this.props.contests.map(contest =>
-                        <ContestPreview {...contest}/>
+                <div className="text-center">
+                    {this.state.contests.map(contest =>
+                        <ContestPreview key={contest.id} {...contest}/>
                     )}
-                </p>
+                </div>
             </div>
         ); // {...this.props} = spread notation
     }
 }
-
-// Define default prop values
-App.defaultProps = {
-    headerMessage: "Hello!!"
-};
 
 export default App;
