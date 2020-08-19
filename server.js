@@ -46,11 +46,15 @@ if (config.nodeEnv == "DEV") {
 }
 
 app.use("/api", apiRouter);
-app.use(express.static("public"));
+
+// Compile sass/styles.sass into public/styles.css
 app.use(sassMiddleware({
     src: path.join(__dirname, "sass"),
     dest: path.join(__dirname, "public")
 }));
+
+// Serve all static files in public/
+app.use(express.static("public"));
 
 app.listen(config.PORT, () => {
     console.log(`~ Express server is listening on https://localhost:${config.PORT}.\n`);
