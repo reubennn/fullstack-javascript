@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 // ---------- Middleware ---------- //
 if (config.nodeEnv == "DEV") {
     console.log(`
-    ~~~~~~~ DEVELOPMENT MODE ~~~~~~~
+~~~~~~~ DEVELOPMENT MODE ~~~~~~~
     `);
     // Required for webpack-dev- and webpack-hot- middleware
 
@@ -34,7 +34,8 @@ if (config.nodeEnv == "DEV") {
     // with the webpack.config.js configuration file as a base.
     const devMiddleware = webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
-        noInfo: true
+        logLevel: "warn"
+        // stats: "minimal"
     });
 
     const hotMiddleware = webpackHotMiddleware(compiler);
