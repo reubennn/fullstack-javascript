@@ -1,13 +1,11 @@
-const env = process.env;
+const nodeEnv = process.env.NODE_ENV || "DEV";
+const PORT = process.env.PORT || 4000;
 
-export const nodeEnv = env.NODE_ENV || "development";
-
-export const cLog = function (message) {
-    console.log("// -------------------- //");
-    console.log(message);
-    console.log("// -------------------- //");
+const cLog = function (message) {
+    console.log(`// -------------------- //
+                ${message}
+// -------------------- //
+`);
 };
 
-export default {
-    port: env.PORT || 4000
-};
+export default { nodeEnv, PORT, cLog };
