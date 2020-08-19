@@ -1,16 +1,17 @@
 const path = require("path");
 const webpack = require("webpack");
+console.log(process.env.ASSET_PATH || "/");
 
 module.exports = {
     mode: "development",
     entry: [
         "webpack-hot-middleware/client",
-        "./src/index.js"
+        path.join(__dirname, "../src/index.js")
     ],
     output: {
-        path: path.join(__dirname, "/public"),
+        publicPath: path.join(__dirname, "../public"), // For public image, css etc
+        path: path.join(__dirname, "../public"), // Location of js build bundle
         filename: "bundle.js",
-        publicPath: "/"
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin()
@@ -34,7 +35,7 @@ module.exports = {
         ],
     },
     devServer: {
-        contentBase: path.join(__dirname, "/public"),
+        contentBase: path.join(__dirname, "../public"),
         compress: true,
         port: 9000,
         inline: true,

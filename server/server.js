@@ -1,8 +1,9 @@
-import config from "./config";
-import apiRouter from "./api/routes";
+import config from "../config/config";
+import apiRouter from "../api/routes";
 import express from "express";
 import sassMiddleware from "node-sass-middleware";
 import path from "path";
+import "./serverRender";
 
 // Webpack middleware Node.js packages
 import webpack from "webpack";
@@ -22,12 +23,12 @@ app.get("/", (req, res) => {
 });
 
 // ---------- Middleware ---------- //
-if (config.nodeEnv == "DEV") {
+if (config.NODE_ENV == "DEV") {
     console.log("\n~~~~~~~ DEVELOPMENT MODE ~~~~~~~\n");
     // Required for webpack-dev- and webpack-hot- middleware
 
     // Set up the compiler webpack.config.js configuration
-    const webpackConfig = require("./webpack.config.js");
+    const webpackConfig = require("../config/webpack.config.js");
     const compiler = webpack(webpackConfig);
 
     // Set up webpack-dev-middleware & webpack-hot-middleware
@@ -56,6 +57,6 @@ app.use(sassMiddleware({
 // Serve all static files in public/
 app.use(express.static("public"));
 
-app.listen(config.PORT, () => {
+app.listen(config.PORT, config.HOST, () => {
     console.log(`~ Express server is listening on https://localhost:${config.PORT}.\n`);
 });

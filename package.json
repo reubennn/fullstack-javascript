@@ -4,8 +4,8 @@
   "description": "Learn by doing! Learn full-stack JavaScript development by building a web application with MongoDB, Node.js, and React.js.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -e js,ejs,html --exec babel-node server.js --ignore public/",
-    "dev-server": "nodemon -e js,ejs,html --exec babel-node server.js --ignore public/",
+    "start": "nodemon -e js,ejs,html --exec babel-node server/server.js --ignore public/",
+    "dev-server": "nodemon -e js,ejs,html --exec babel-node server/server.js --ignore public/",
     "dev-client": "webpack-dev-server --open",
     "dev": "webpack -wd"
   },
