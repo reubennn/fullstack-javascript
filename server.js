@@ -1,6 +1,8 @@
 import config from "./config";
 import apiRouter from "./api/routes";
 import express from "express";
+import sassMiddleware from "node-sass-middleware";
+import path from "path";
 
 // Webpack middleware Node.js packages
 import webpack from "webpack";
@@ -21,7 +23,7 @@ app.get("/", (req, res) => {
 
 // ---------- Middleware ---------- //
 if (config.nodeEnv == "DEV") {
-    console.log(`\n~~~~~~~ DEVELOPMENT MODE ~~~~~~~\n`);
+    console.log("\n~~~~~~~ DEVELOPMENT MODE ~~~~~~~\n");
     // Required for webpack-dev- and webpack-hot- middleware
 
     // Set up the compiler webpack.config.js configuration
@@ -46,6 +48,10 @@ if (config.nodeEnv == "DEV") {
 }
 
 app.use("/api", apiRouter);
+app.use(sassMiddleware({
+    src: path.join(__dirname, "sass"),
+    dest: path.join(__dirname, "public")
+}));
 // app.use(express.static("public"));
 
 app.listen(config.PORT, () => {
