@@ -43,16 +43,14 @@ if (config.nodeEnv == "DEV") {
     // Tell express to use the webpack middleware
     app.use(devMiddleware);
     app.use(hotMiddleware);
-} else {
-    app.use(express.static("public"));
 }
 
 app.use("/api", apiRouter);
+app.use(express.static("public"));
 app.use(sassMiddleware({
     src: path.join(__dirname, "sass"),
     dest: path.join(__dirname, "public")
 }));
-// app.use(express.static("public"));
 
 app.listen(config.PORT, () => {
     console.log(`~ Express server is listening on https://localhost:${config.PORT}.\n`);
