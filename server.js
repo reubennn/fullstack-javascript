@@ -15,7 +15,7 @@ app.set("view engine", "ejs");
 // Render index.ejs
 app.get("/", (req, res) => {
     res.render("index", {
-        content: "Hello Express and <em>EJS</em>!"
+        content: "React App is generating..."
     });
 });
 
