@@ -21,9 +21,7 @@ app.get("/", (req, res) => {
 
 // ---------- Middleware ---------- //
 if (config.nodeEnv == "DEV") {
-    console.log(`
-~~~~~~~ DEVELOPMENT MODE ~~~~~~~
-    `);
+    console.log(`\n~~~~~~~ DEVELOPMENT MODE ~~~~~~~\n`);
     // Required for webpack-dev- and webpack-hot- middleware
 
     // Set up the compiler webpack.config.js configuration
@@ -51,7 +49,5 @@ app.use("/api", apiRouter);
 // app.use(express.static("public"));
 
 app.listen(config.PORT, () => {
-    config.cLog(`
-Express server is listening on https://localhost:${config.PORT}.
-    `);
+    console.log(`~ Express server is listening on https://localhost:${config.PORT}.\n`);
 });

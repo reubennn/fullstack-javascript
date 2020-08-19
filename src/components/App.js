@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./Header";
+import ContestPreview from "./ContestPreview";
 
 // Use class ___ extends React.Component if we need to introduce state
 // Or if lifecycle methods are required
@@ -14,26 +15,17 @@ class App extends React.Component {
     state = {
         pageHeader: "Naming Contests"
     };
-    componentDidMount() {
-        // ajax
-        // Timers, Listeners
-        console.log("Did mount");
-        debugger;
-    }
-    componentWillUnmount() {
-        // Clean timers, listeners
-        console.log("Will unmount");
-        debugger;
-    }
     render() {
         return (
             <div className="App">
                 <Header message={this.state.pageHeader} />
                 <p className="text-center">
-                    ...
+                    {this.props.contests.map(contest =>
+                        <ContestPreview {...contest}/>
+                    )}
                 </p>
             </div>
-        );
+        ); // {...this.props} = spread notation
     }
 }
 
