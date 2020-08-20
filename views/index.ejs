@@ -1,9 +1,11 @@
 <%- include("./layout/partials/header") -%>
 
 <body class="container">
-  <div id="root">
-    <%- content %>
-  </div>
+  <div id="root"><%- initialMarkup %></div>
+
+  <script type="text/javascript">
+    window.data = <%- JSON.stringify(initialData) %>;
+  </script>
 
   <%- include("./layout/partials/scripts") -%>
 </body>

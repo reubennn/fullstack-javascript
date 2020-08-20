@@ -2,7 +2,7 @@ const env = process.env;
 
 export default {
     NODE_ENV: env.NODE_ENV || "DEV",
-    PORT: env.PORT || 4000,
+    PORT: env.PORT || 3000,
     HOST: env.HOST || "0.0.0.0",
     get serverUrl() {
         return `http://${this.HOST}:${this.PORT}`;

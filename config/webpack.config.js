@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-console.log(process.env.ASSET_PATH || "/");
 
 module.exports = {
     mode: "development",
@@ -25,13 +24,6 @@ module.exports = {
                     loader: "babel-loader",
                 },
             },
-            // {
-            //     test: /\.json$/,
-            //     exclude: /node_modules/,
-            //     use: {
-            //         loader: "json-loader",
-            //     },
-            // }
         ],
     },
     devServer: {
@@ -45,7 +37,7 @@ module.exports = {
             poll: true
         },
         proxy: {
-            "^/api/*": {
+            "/api/*": {
                 target: "http://localhost:4000",
                 secure: false
             },

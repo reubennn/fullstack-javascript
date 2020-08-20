@@ -3,7 +3,7 @@ import apiRouter from "../api/routes";
 import express from "express";
 import sassMiddleware from "node-sass-middleware";
 import path from "path";
-import "./serverRender";
+import serverRender from "./serverRender";
 
 // Webpack middleware Node.js packages
 import webpack from "webpack";
@@ -17,9 +17,16 @@ app.set("view engine", "ejs");
 
 // Render index.ejs
 app.get("/", (req, res) => {
-    res.render("index", {
-        content: "..."
-    });
+    serverRender()
+        .then(({initialMarkup, initialData}) => {
+            res.render("index", {
+                initialMarkup,
+                initialData
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 // ---------- Middleware ---------- //
