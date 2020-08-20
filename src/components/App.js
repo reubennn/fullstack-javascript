@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "./Header";
 import ContestList from "./ContestList";
 import Contest from "./Contest";
+import * as api from "../api";
 
 const pushState = (obj, url) => {
     window.history.pushState(obj, "", url);
@@ -22,12 +23,17 @@ class App extends React.Component {
             `/contest/${contestId}`
         );
 
-        // Lookup the contest
-        // this.state.contests[contestId]
-        this.setState({
-            pageHeader: this.state.contests[contestId].contestName,
-            currentContestId: contestId
-        });
+        api.fetchContest(contestId)
+            .then(contest => {
+                this.setState({
+                    pageHeader: contest.contestName,
+                    currentContestId: contest.id,
+                    contests: {
+                        ...this.state.contests, // Copy the current contests state
+                        [contest.id]: contest // Property associated with current contest id => set to new contest from server
+                    }
+                });
+            });
     };
 
     currentContent() {

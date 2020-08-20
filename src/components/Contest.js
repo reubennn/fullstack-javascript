@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 
 export default class Contest extends Component {
     static propTypes = {
-        id: PropTypes.number.isRequired
+        description: PropTypes.string.isRequired
     }
 
     render() {
         return (
             <div className="Contest">
-                {this.props.id}
+                {this.props.description}
             </div>
         );
     }
