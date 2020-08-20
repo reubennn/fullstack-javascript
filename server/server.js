@@ -35,7 +35,8 @@ if (config.NODE_ENV == "DEV") {
     // with the webpack.config.js configuration file as a base.
     const devMiddleware = webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
-        logLevel: "warn"
+        logLevel: "warn",
+        writeToDisk: true
         // stats: "minimal"
     });
 
