@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 
 export default class ContestPreview extends Component {
     static propTypes = {
+        id: PropTypes.number.isRequired,
         categoryName: PropTypes.string.isRequired,
-        contestName: PropTypes.string.isRequired
+        contestName: PropTypes.string.isRequired,
+        onClick: PropTypes.func.isRequired
     }
 
     handleClick = () => {
-        console.log(this.props.contestName);
+        this.props.onClick(this.props.id);
     };
     render() {
         return (
