@@ -58,8 +58,8 @@ app.use("/api", apiRouter);
 
 // Compile sass/styles.sass into public/styles.css
 app.use(sassMiddleware({
-    src: path.join(__dirname, "sass"),
-    dest: path.join(__dirname, "public")
+    src: path.join(__dirname, "../sass"),
+    dest: path.join(__dirname, "../public")
 }));
 
 // Serve all static files in public/
