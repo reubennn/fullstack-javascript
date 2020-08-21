@@ -9,10 +9,10 @@ import App from "./components/App";
 let isMarkupPresent = document.getElementById("root").hasChildNodes();
 
 isMarkupPresent ? ReactDOM.hydrate(
-    <App initialContests={window.data.contests} />,
+    <App initialData={window.initialData} />,
     document.getElementById("root")
 )
     : ReactDOM.render(
-        <App initialContests={window.data.contests} />,
+        <App initialData={window.initialData} />,
         document.getElementById("root")
     );

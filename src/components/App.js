@@ -12,10 +12,11 @@ const pushState = (obj, url) => {
 // Use class ___ extends React.Component if we need to introduce state
 // Or if lifecycle methods are required
 class App extends React.Component {
-    state = {
-        pageHeader: "Naming Contests",
-        contests: this.props.initialContests
+    static propTypes = {
+        initialData: PropTypes.object.isRequired
     };
+
+    state = this.props.initialData;
 
     fetchContest = (contestId) => {
         pushState(
@@ -26,7 +27,6 @@ class App extends React.Component {
         api.fetchContest(contestId)
             .then(contest => {
                 this.setState({
-                    pageHeader: contest.contestName,
                     currentContestId: contest.id,
                     contests: {
                         ...this.state.contests, // Copy the current contests state
@@ -35,10 +35,20 @@ class App extends React.Component {
                 });
             });
     };
+    currentContest() {
+        return this.state.contests[this.state.currentContestId];
+    }
+
+    pageHeader() {
+        if (this.state.currentContestId) {
+            return this.currentContest().contestName;
+        }
+        return "Naming Contests";
+    }
 
     currentContent() {
         if (this.state.currentContestId) {
-            return <Contest {...this.state.contests[this.state.currentContestId]} />;
+            return <Contest {...this.currentContest()} />;
         }
         return <ContestList
             onContestClick={this.fetchContest}
@@ -48,15 +58,11 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Header message={this.state.pageHeader} />
+                <Header message={this.pageHeader()} />
                 {this.currentContent()}
             </div>
         ); // {...this.props} = spread notation
     }
 }
-
-App.propTypes = {
-    initialContests: PropTypes.object
-};
 
 export default App;
