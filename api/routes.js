@@ -23,7 +23,8 @@ router.get("/contests", (req, res) => {
             _id: 0,
             id: 1,
             categoryName: 1,
-            contestName: 1
+            contestName: 1,
+            description: 1
         })
         .each((err, contest) => { // Cursor jumps to each document found
             assert.equal(null, err);
