@@ -1,23 +1,44 @@
 import express from "express";
-import data from "../src/testData";
+import { MongoClient } from "mongodb";
+import assert from "assert";
+import config from "../config/config";
+
+let db;
+
+MongoClient.connect(config.mongodbUri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    assert.equal(null, err); // Checks if err === null, if it doesn't (error occurred), it will throw an error
+
+    console.log(`Connected successfully to the Mongo server on ${config.mongodbUri}\n`);
+    db = client.db("fullstack");
+    db.collection("contests");
+});
 
 const router = express.Router();
-const contests = data.contests.reduce((obj, contest) => {
-    obj[contest.id] = contest;
-    return obj;
-}, {}); // reduce.(callback(accumulator, currentValue)..., initial value)
+
 
 router.get("/contests", (req, res) => {
-    res.send({
-        contests: contests
-    });
+    let contests = {};
+    db.collection("contests").find({})
+        .project({ // Only get the relevant data
+            _id: 0,
+            id: 1,
+            categoryName: 1,
+            contestName: 1
+        })
+        .each((err, contest) => { // Cursor jumps to each document found
+            assert.equal(null, err);
+            if (!contest) { // No more contests to process
+                res.send({ contests });
+                return;
+            }
+            contests[contest.id] = contest;
+        });
 });
 
 router.get("/contests/:contestId", (req, res) => {
-    // contestId is dynamic => accessible by req.params.contestId
-    let contest = contests[req.params.contestId];
-    contest.description = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident consequatur eos in ad ratione corrupti. Distinctio harum quisquam repellat, esse rerum et tenetur illo repellendus voluptate aliquid nisi corporis neque!";
-    res.send(contest);
+    db.collection("contests").findOne({ id: Number(req.params.contestId) })
+        .then(contest => res.send(contest))
+        .catch(console.error);
 });
 
 export default router;

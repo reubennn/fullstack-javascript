@@ -7,7 +7,8 @@
     "start": "nodemon -e js,ejs,html --exec babel-node server/server.js --ignore public/",
     "dev-server": "nodemon -e js,ejs,html --exec babel-node server/server.js --ignore public/",
     "dev-client": "webpack-dev-server --open",
-    "dev": "webpack -wd"
+    "dev": "webpack -wd",
+    "load-data": "npx babel-node --presets @babel/preset-env loadTestData.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/node": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
