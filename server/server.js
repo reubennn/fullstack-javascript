@@ -16,8 +16,8 @@ const app = express();
 app.set("view engine", "ejs");
 
 // Render index.ejs
-app.get("/", (req, res) => {
-    serverRender()
+app.get(["/", "/contest/:contestId"],(req, res) => {
+    serverRender(req.params.contestId)
         .then(({initialMarkup, initialData}) => {
             res.render("index", {
                 initialMarkup,
