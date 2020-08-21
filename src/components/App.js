@@ -9,6 +9,10 @@ const pushState = (obj, url) => {
     window.history.pushState(obj, "", url);
 };
 
+const onPopState = handler => {
+    window.onpopstate = handler;
+};
+
 // Use class ___ extends React.Component if we need to introduce state
 // Or if lifecycle methods are required
 class App extends React.Component {
@@ -17,6 +21,21 @@ class App extends React.Component {
     };
 
     state = this.props.initialData;
+
+    // Handle when user presses browser forward and back buttons
+    componentDidMount() {
+        onPopState((event) => {
+            this.setState({
+                // if event.state is null, initialise it with empty object
+                currentContestId: (event.state || {}).currentContestId
+                // above will either return the currentContestId or null (for empty object)
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        onPopState(null);
+    }
 
     fetchContest = (contestId) => {
         pushState(
