@@ -42,4 +42,18 @@ router.get("/contests/:contestId", (req, res) => {
         .catch(console.error);
 });
 
+router.get("/names/:nameIds", (req, res) => {
+    const nameIds = req.params.nameIds.split(",").map(Number); // Converts to array of numbers [101, 102...]
+    let names = {};
+    db.collection("names").find({id: {$in: nameIds}}) // Find all the names for all the ids that are passed to the API
+        .each((err, name) => { // Cursor jumps to each document found
+            assert.equal(null, err);
+            if (!name) { // No more names to process
+                res.send({ names });
+                return;
+            }
+            names[name.id] = name;
+        });
+});
+
 export default router;
