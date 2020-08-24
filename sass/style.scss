@@ -1,3 +1,7 @@
+h1 {
+  margin-bottom: 0.5em;
+}
+
 .ContestPreview {
   margin: 1em;
   border: 1px solid #ccc;
@@ -18,7 +22,16 @@
   cursor: pointer;
 }
 
-.home-link {
-  margin-top: 1em;
-  color: #0000ee;
+.card {
+  margin-bottom: 1em;
+}
+
+.card-header {
+  color: #ffffff;
+  padding: 0.2rem 1.25rem
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin-bottom: 0.5rem;
 }
