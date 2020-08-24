@@ -6,10 +6,10 @@ import App from "../src/components/App";
 import config from "../config/config";
 
 const getApiUrl = (contestId) => {
-    if (contestId) {
+    if (contestId) { // Fetch all of the data for a specific contest
         return `${config.serverUrl}/api/contests/${contestId}`;
     }
-    return `${config.serverUrl}/api/contests`;
+    return `${config.serverUrl}/api/contests`; // Fetch core data for all contests
 };
 
 const getInitialData = (contestId, apiData) => {

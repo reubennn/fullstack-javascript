@@ -5,6 +5,13 @@ export default class Contest extends Component {
     static propTypes = {
         description: PropTypes.string.isRequired,
         contestListClick: PropTypes.func.isRequired,
+        fetchNames: PropTypes.func.isRequired,
+        nameIds: PropTypes.array.isRequired,
+        lookupName: PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        this.props.fetchNames(this.props.nameIds);
     }
 
     render() {
@@ -27,8 +34,12 @@ export default class Contest extends Component {
                     </div>
                     <div className="card-body">
                         <ul className="list-group">
-                            <li className="list-group-item">Name one...</li>
-                            <li className="list-group-item">Name two...</li>
+                            {this.props.nameIds.map(nameId =>
+                                <li className="list-group-item"
+                                    key={nameId} >
+                                    {this.props.lookupName(nameId).name}
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </div>
@@ -53,7 +64,7 @@ export default class Contest extends Component {
                     onClick={this.props.contestListClick}>
                     Contest List
                 </button>
-            </div>
+            </div >
         );
     }
 }
