@@ -1,5 +1,5 @@
 import express from "express";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectID } from "mongodb";
 import assert from "assert";
 import config from "../config/config";
 
@@ -20,8 +20,7 @@ router.get("/contests", (req, res) => {
     let contests = {};
     db.collection("contests").find({})
         .project({ // Only get the relevant data
-            _id: 0,
-            id: 1,
+            _id: 1,
             categoryName: 1,
             contestName: 1,
             description: 1
@@ -32,27 +31,27 @@ router.get("/contests", (req, res) => {
                 res.send({ contests });
                 return;
             }
-            contests[contest.id] = contest;
+            contests[contest._id] = contest;
         });
 });
 
 router.get("/contests/:contestId", (req, res) => {
-    db.collection("contests").findOne({ id: Number(req.params.contestId) })
+    db.collection("contests").findOne({ _id: ObjectID(req.params.contestId) })
         .then(contest => res.send(contest))
         .catch(console.error);
 });
 
 router.get("/names/:nameIds", (req, res) => {
-    const nameIds = req.params.nameIds.split(",").map(Number); // Converts to array of numbers [101, 102...]
+    const nameIds = req.params.nameIds.split(",").map(ObjectID); // Converts to array of numbers [101, 102...]
     let names = {};
-    db.collection("names").find({id: {$in: nameIds}}) // Find all the names for all the ids that are passed to the API
+    db.collection("names").find({_id: {$in: nameIds}}) // Find all the names for all the ids that are passed to the API
         .each((err, name) => { // Cursor jumps to each document found
             assert.equal(null, err);
             if (!name) { // No more names to process
                 res.send({ names });
                 return;
             }
-            names[name.id] = name;
+            names[name._id] = name;
         });
 });
 
