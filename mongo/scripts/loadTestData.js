@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import assert from "assert";
-import config from "./config/config";
+import config from "../../config/config";
 
 MongoClient.connect(config.mongodbUri, { useUnifiedTopology: true }, (err, client) => {
     assert.equal(null, err);

@@ -8,8 +8,8 @@
     "dev-server": "nodemon -e js,ejs,html --exec babel-node server/server.js --ignore public/",
     "dev-client": "webpack-dev-server --open",
     "dev": "webpack -wd",
-    "load-data": "npx babel-node --presets @babel/preset-env loadTestData.js",
-    "update-data": "npx babel-node --presets @babel/preset-env updateTestData.js"
+    "load-data": "npx babel-node --presets @babel/preset-env mongo/scripts/loadTestData.js",
+    "update-data": "npx babel-node --presets @babel/preset-env mongo/scripts/updateTestData.js"
   },
   "repository": {
     "type": "git",
