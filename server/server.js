@@ -16,18 +16,23 @@ const app = express();
 app.set("view engine", "ejs");
 
 // Render index.ejs
-app.get(["/", "/contest/:contestId"],(req, res) => {
+app.get(["/", "/contest/:contestId"], (req, res) => {
     serverRender(req.params.contestId)
-        .then(({initialMarkup, initialData}) => {
+        .then(({ initialMarkup, initialData }) => {
             res.render("index", {
                 initialMarkup,
                 initialData
             });
         })
         .catch(err => {
-            console.log(err);
+            console.error(err);
+            res.status(404).send("Bad request");
         });
 });
+
+// app.all("*", function(req, res) {
+//     throw new Error("Bad request");
+// });
 
 // ---------- Middleware ---------- //
 if (config.NODE_ENV == "DEV") {
@@ -64,6 +69,12 @@ app.use(sassMiddleware({
 
 // Serve all static files in public/
 app.use(express.static("public"));
+
+// app.use(function(e, req, res, next) {
+//     if (e.message === "Bad request") {
+//         res.status(400).json({error: {msg: e.message, stack: e.stack}});
+//     }
+// });
 
 app.listen(config.PORT, config.HOST, () => {
     console.log(`~ Express server is listening on https://localhost:${config.PORT}.\n`);
