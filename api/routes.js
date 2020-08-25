@@ -44,7 +44,7 @@ router.get("/contests/:contestId", (req, res) => {
 router.get("/names/:nameIds", (req, res) => {
     const nameIds = req.params.nameIds.split(",").map(ObjectID); // Converts to array of numbers [101, 102...]
     let names = {};
-    db.collection("names").find({_id: {$in: nameIds}}) // Find all the names for all the ids that are passed to the API
+    db.collection("names").find({ _id: { $in: nameIds } }) // Find all the names for all the ids that are passed to the API
         .each((err, name) => { // Cursor jumps to each document found
             assert.equal(null, err);
             if (!name) { // No more names to process
@@ -52,6 +52,37 @@ router.get("/names/:nameIds", (req, res) => {
                 return;
             }
             names[name._id] = name;
+        });
+});
+
+router.post("/names", (req, res) => {
+    const contestId = ObjectID(req.body.contestId);
+    const name = req.body.newName;
+    // Validation
+    db.collection("names").insertOne({ name })
+        .then(result => {
+            db.collection("contests").findOneAndUpdate(
+                { _id: contestId },
+                { $push: { nameIds: result.insertedId } },
+                { returnOriginal: false } // Ensures the updated document is returned
+            )
+                .then(doc => {
+                    res.send({
+                        updatedContest: doc.value,
+                        newName: {
+                            _id: result.insertedId,
+                            name
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(404).send("Bad Request");
+                });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(404).send("Bad Request");
         });
 });
 

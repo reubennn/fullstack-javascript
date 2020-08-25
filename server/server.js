@@ -2,6 +2,7 @@ import config from "../config/config";
 import apiRouter from "../api/routes";
 import express from "express";
 import sassMiddleware from "node-sass-middleware";
+import bodyParser from "body-parser";
 import path from "path";
 import serverRender from "./serverRender";
 
@@ -59,6 +60,11 @@ if (config.NODE_ENV == "DEV") {
     app.use(hotMiddleware);
 }
 
+// Use Body Parser middleware 
+// Note: needs to be defined before defining API router middleware
+app.use(bodyParser.json());
+
+// Use our API router as middleware with "/api" endpoint
 app.use("/api", apiRouter);
 
 // Compile sass/styles.sass into public/styles.css

@@ -2,17 +2,32 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class Contest extends Component {
+    constructor(props) {
+        super(props);
+        this.newNameInput = React.createRef();
+    }
+
     static propTypes = {
+        _id: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         contestListClick: PropTypes.func.isRequired,
         fetchNames: PropTypes.func.isRequired,
         nameIds: PropTypes.array.isRequired,
-        lookupName: PropTypes.func.isRequired
+        lookupName: PropTypes.func.isRequired,
+        addName: PropTypes.func.isRequired
     }
 
     componentDidMount() {
         this.props.fetchNames(this.props.nameIds);
     }
+
+    handleSubmit = (event) => {
+        // Prevent the form from doing default behaviour and submitting
+        event.preventDefault();
+        // Read the value that the user typed
+        this.props.addName(this.newNameInput.current.value, this.props._id);
+        this.newNameInput.current.value = "";
+    };
 
     render() {
         return (
@@ -49,11 +64,18 @@ export default class Contest extends Component {
                         <h3 className="card-title">Propose a New Name</h3>
                     </div>
                     <div className="card-body">
-                        <form>
+                        <form onSubmit={this.handleSubmit}>
                             <div className="input-group">
-                                <input type="text" placeholder="New Name Here..." className="form-control" />
+                                <input type="text"
+                                    placeholder="New Name Here..."
+                                    ref={this.newNameInput}
+                                    className="form-control"
+                                />
                                 <span className="input-group-btn">
-                                    <button type="submit" className="btn btn-info">Submit</button>
+                                    <button type="submit"
+                                        className="btn btn-info">
+                                        Submit
+                                    </button>
                                 </span>
                             </div>
                         </form>
