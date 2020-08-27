@@ -83,5 +83,5 @@ app.use(express.static("public"));
 // });
 
 app.listen(config.PORT, config.HOST, () => {
-    console.log(`~ Express server is listening on https://localhost:${config.PORT}.\n`);
+    console.log(`~ Express server is listening on http://localhost:${config.PORT}.\n`);
 });
